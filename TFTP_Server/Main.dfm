@@ -17,6 +17,7 @@ object FormMain: TFormMain
   Position = poDesktopCenter
   ScreenSnap = True
   SnapBuffer = 40
+  OnClose = FormClose
   PixelsPerInch = 96
   TextHeight = 13
   object memo: TAdvMemo
@@ -132,32 +133,13 @@ object FormMain: TFormMain
     Version = '3.4.1.0'
     WordWrap = wwNone
   end
-  object TFTP_Server: TIdFTPServer
-    Bindings = <>
-    CommandHandlers = <>
-    ExceptionReply.Code = '500'
-    ExceptionReply.Text.Strings = (
-      'Unknown Internal Error')
-    Greeting.Code = '220'
-    Greeting.Text.Strings = (
-      'Indy FTP Server ready.')
-    MaxConnectionReply.Code = '300'
-    MaxConnectionReply.Text.Strings = (
-      'Too many connections. Try again later.')
-    ReplyTexts = <>
-    ReplyUnknownCommand.Code = '500'
-    ReplyUnknownCommand.Text.Strings = (
-      'Unknown Command')
-    AnonymousAccounts.Strings = (
-      'anonymous'
-      'ftp'
-      'guest')
-    SITECommands = <>
-    MLSDFacts = []
-    ReplyUnknownSITCommand.Code = '500'
-    ReplyUnknownSITCommand.Text.Strings = (
-      'Invalid SITE command.')
-    Left = 552
-    Top = 8
+  object TFTP_Server: TIdTrivialFTP
+    OnStatus = TFTP_ServerStatus
+    Port = 69
+    ReceiveTimeout = 4000
+    OnConnected = TFTP_ServerConnected
+    OnDisconnected = TFTP_ServerDisconnected
+    Left = 480
+    Top = 40
   end
 end
